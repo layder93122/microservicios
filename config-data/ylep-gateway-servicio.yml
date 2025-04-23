@@ -1,0 +1,31 @@
+server:
+  port: 8085
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enable: true
+      routes:
+        - id: ylep-usuario-servicio
+          uri: lb://ylep-usuario-servicio
+          predicates:
+            - Path=/usuario/**
+
+        - id: ylep-prestamo-servicio
+          uri: lb://ylep-prestamo-servicio
+          predicates:
+            - Path=/prestamos/**
+
+        - id: ylep-libro-servicio
+          uri: lb://ylep-libro-servicio
+          predicates:
+            - Path=/libros/**
